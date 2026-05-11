@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Ciclo do Céu</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(90deg, rgb(104, 196, 227) 0%, rgb(107, 97, 163) 100%);
+      background-attachment: fixed;
+      overflow: hidden;
+      transition: background 1s;
+    }
+
+    /* TARDE */
+    body.tarde {
+      background: linear-gradient(90deg, #ff9966, #ff5e62);
+    }
+
+    /* NOITE */
+    body.noite {
+      background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+    }
+
+    @keyframes nascerPorDoSol {
+      0% { top: 100vh; opacity: 0; }
+      25% { top: 50vh; opacity: 1; }
+      50% { top: 30px; opacity: 1; }
+      75% { top: 50vh; opacity: 1; }
+      100% { top: 100vh; opacity: 0; }
+    }
+
+    .sol {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, yellow 60%, orange 100%);
+      box-shadow: 0 0 40px 15px rgba(255, 255, 0, 0.5);
+      animation: nascerPorDoSol 10s infinite ease-in-out;
+      cursor: pointer;
+      transition: all 0.5s;
+      z-index: 2;
+    }
+
+    .sol:hover {
+      animation-play-state: paused;
+    }
+
+    /* TARDE (SOL) */
+    .sol.tarde {
+      background: radial-gradient(circle, #FFD700 60%, #FF8C00 100%);
+      box-shadow: 0 0 40px 15px rgba(255, 140, 0, 0.6);
+    }
+
+    /* NOITE (SOL ESCURO) */
+    .sol.escuro {
+      background: radial-gradient(circle, #bbb 30%, #555 100%);
+      box-shadow: 0 0 30px rgba(200, 200, 200, 0.2);
+    }
+
+    .onda {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      transition: transform 0.5s;
+    }
+
+    .onda.animar {
+      transform: translateY(-20px);
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      font-family: sans-serif;
+      margin-top: 20px;
+      z-index: 2;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Ciclo do Céu - Pressione ESPAÇO para mudar</h1>
+
+  <div id="sol" class="sol"></div> 
+
+  <div id="onda" class="onda">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path fill="#E35336"
+        d="M0,288L34.3,272C68.6,256,137,224,206,224C274.3,224,343,256,411,250.7C480,245,549,203,617,192C685.7,181,754,203,823,186.7C891.4,171,960,117,1029,96C1097.1,75,1166,85,1234,128C1302.9,171,1371,245,1406,282.7L1440,320L0,320Z">
+      </path>
+    </svg>
+  </div>
+
+  <script>
+    const onda = document.getElementById('onda');
+    const sol = document.getElementById('sol');
+
+    // animação da onda
+    onda.addEventListener('click', () => {
+      onda.classList.add('animar');
+      setTimeout(() => {
+        onda.classList.remove('animar');
+      }, 500);
+    });
+
+    // estados: 0 = dia | 1 = tarde | 2 = noite
+    let estado = 0;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+
+        estado = (estado + 1) % 3;
+
+        // limpa tudo
+        document.body.classList.remove('tarde', 'noite');
+        sol.classList.remove('tarde', 'escuro');
+
+        if (estado === 1) {
+          document.body.classList.add('tarde');
+          sol.classList.add('tarde');
+        } 
+        else if (estado === 2) {
+          document.body.classList.add('noite');
+          sol.classList.add('escuro');
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
