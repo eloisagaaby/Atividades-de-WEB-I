@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+
+  /* CÉU ANIMADO (DIA → NOITE) */
+  background: linear-gradient(to top, #87ceeb, #cfefff);
+  animation: ceuAnimado 10s infinite ease-in-out;
+}
+
+/* ANIMAÇÃO DO CÉU */
+@keyframes ceuAnimado {
+  0% {
+    background: linear-gradient(to top, #87ceeb, #cfefff);
+  }
+  50% {
+    background: linear-gradient(to top, #ff7e5f, #feb47b); /* entardecer */
+  }
+  100% {
+    background: linear-gradient(to top, #1e3c72, #2a5298);
+  }
+}
+
+@keyframes solAnimado {
+  0% {
+    top: 100%;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+  }
+  25% {
+    top: 60%;
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    top: 12%;
+    opacity: 1;
+    transform: translateX(-50%) scale(1.1);
+  }
+  75% {
+    top: 60%;
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+  }
+}
+
+.sol {
+  position: absolute;
+  left: 50%;
+
+  width: 100px;
+  height: 100px;
+
+  border-radius: 50%;
+
+  /* SOL ANIMANDO COR */
+  background: radial-gradient(circle, #fff700 40%, #ffae00 70%, #ff7b00 100%);
+  animation: solAnimado 10s infinite ease-in-out,
+             solCor 10s infinite ease-in-out;
+
+  /* BRILHO */
+  box-shadow:
+    0 0 30px rgba(255, 223, 0, 0.8),
+    0 0 60px rgba(255, 140, 0, 0.6),
+    0 0 100px rgba(255, 69, 0, 0.4);
+
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* COR DO SOL MUDANDO AUTOMATICAMENTE */
+@keyframes solCor {
+  0% {
+    background: radial-gradient(circle, #fff700 40%, #ffae00 70%, #ff7b00 100%);
+  }
+  50% {
+    background: radial-gradient(circle, #ffae00 40%, #ff4500 80%, #8b0000 100%);
+  }
+  100% {
+    background: radial-gradient(circle, #fff700 40%, #ffae00 70%, #ff7b00 100%);
+  }
+}
